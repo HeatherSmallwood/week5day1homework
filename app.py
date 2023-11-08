@@ -25,7 +25,7 @@ def pokemon_form():
                 'hp_base_stat' : extra_data['stats'][0]['base_stat'],
                 'sprites_image': extra_data['sprites']['front_shiny']
             }
-            print(pokemon_dict)
+           
             return render_template('pokemonForm.html', pokemon_info=pokemon_dict)
         except:
             return render_template('pokemonForm.html')

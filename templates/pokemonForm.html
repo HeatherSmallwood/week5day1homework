@@ -17,7 +17,7 @@
       </form>
      
       {%if pokemon_info %}
-      {{ pokemon_info }}
+     
       
      
     
@@ -46,7 +46,7 @@
                 <td>{{ pokemon_info['defense_base_stat'] }}</td>
                 <td>{{pokemon_info['hp_base_stat'] }}</td>
                 <td>{{pokemon_info['sprites_image'] }}</td>
-                <td><img src="{{pokemon_data['sprites_image'] }}" alt="shiny_sprite">
+                <td><img src="{{pokemon_info['sprites_image'] }}" alt="shiny_sprite">
                 
               </tr>
             
