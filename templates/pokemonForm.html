@@ -5,49 +5,52 @@
 {% endblock %}
 
 {% block title %}
-    Login Page
+    Pokemon Search
 {% endblock %}
 
 {% block content %}
     <form method="POST">
         <div class="mb-3">
           <label for="pokemonLabel" class="form-label">Pokemon Name: </label>
-          <input type="text" class="form-control" id="pokemonLabel" aria-describedby="place to enter the pokemon name" name="pokemon_info">
+          <input type="text" class="form-control" id="pokemonLabel" aria-describedby="place to enter the pokemon name" name="pokemon_data">
         <button type="submit" class="btn btn-primary">Search</button>
       </form>
+     
+      {%if pokemon_info %}
       {{ pokemon_info }}
-      {% if data %}
+      
+     
     
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Pokemon Name</th>
-            <th scope="col">Ability</th>
-            <th scope="col">Base Experience</th>
-            <th scope="col">Attack Base Stat</th>
-            <th scope="col">Defense Base Stat</th>
-            <th scope="col">HP Base Stat</th>
-            <th scope="col">Front Shiny Sprite</th>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Pokemon Name</th>
+                <th scope="col">Ability</th>
+                <th scope="col">Base Experience</th>
+                <th scope="col">Attack Base Stat</th>
+                <th scope="col">Defense Base Stat</th>
+                <th scope="col">HP Base Stat</th>
+                <th scope="col">Front Shiny Sprite</th>
 
 
-          </tr>
-        </thead>
-        <tbody>
-           
-          <tr>
-            <th scope="row">{{ pokemon_info['name']}}</th>
-            <td>{{ pokemon_info['ability_name'] }}</td>
-            <td>{{ pokemon_info['ability_name'] }}</td>
-            <td>{{pokemon_info['base_experience'] }}</td>
-            <td>{{ pokemon_info['attack_base_stat'] }}</td>
-            <td>{{ pokemon_info['defense_base_stat'] }}</td>
-            <td>{{pokemon_info['hp_base_stat'] }}</td>
-            <td>{{pokemon_info[' sprites_image'] }}</td>
-            <td><img src="{{ pokemon_info['sprites_image'] }}" alt="shiny_sprite">
+              </tr>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <th scope="row">{{ pokemon_info['name']}}</th>
+                <td>{{ pokemon_info['ability_name'] }}</td>
+                <td>{{ pokemon_info['ability_name'] }}</td>
+                <td>{{pokemon_info['base_experience'] }}</td>
+                <td>{{ pokemon_info['attack_base_stat'] }}</td>
+                <td>{{ pokemon_info['defense_base_stat'] }}</td>
+                <td>{{pokemon_info['hp_base_stat'] }}</td>
+                <td>{{pokemon_info['sprites_image'] }}</td>
+                <td><img src="{{pokemon_data['sprites_image'] }}" alt="shiny_sprite">
+                
+              </tr>
             
-          </tr>
-         
-        </tbody>
-      </table>
+            </tbody>
+        </table>
       {% endif%}
 {% endblock %}
