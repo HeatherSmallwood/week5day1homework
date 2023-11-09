@@ -2,6 +2,9 @@ from flask import request, render_template
 import requests
 from app import app
 from app.forms import pokemonFormForm
+from app.forms import LoginForm
+from app.forms import SignupForm
+
 
 # Home
 @app.route('/')
@@ -35,6 +38,44 @@ def pokemon_form():
             return render_template('pokemonForm.html',form=form)
     else:
         return render_template('pokemonForm.html', form=form)
+    
+REGISTERED_USERS={
+    'heather@pokemon.com':{
+        'name': 'Heather Smallwood',
+        'password':'ocean7'
+    }
+}
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm() 
+    if request.method == 'POST' and form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+
+        if email in REGISTERED_USERS and REGISTERED_USERS[email]['password'] == password:
+            return f'Hello, {REGISTERED_USERS[email]['name']}'
+        else:
+            return 'Invalid email or password'
+    else:
+        return render_template('login.html', form=form)
+
+
+
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    form = SignupForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        full_name = f'{form.firstName.data} {form.lastName.data}'
+        email = form.email.data
+        password= form.password.data
+        REGISTERED_USERS[email] ={
+            'name':full_name,
+            'password':password
+        }
+        return f'Thank you for singing up {full_name}!'
+    else:
+        return render_template('signup.html', form=form)
 
 

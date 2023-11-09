@@ -1,0 +1,45 @@
+*{
+    font-family: 'Edu TAS Beginner', cursive;
+font-family: 'Inria Sans', sans-serif;
+}
+
+body{
+    height: 100vh;
+    background: #ff6e7f;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #bfe9ff, #ff6e7f);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #bfe9ff, #ff6e7f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+img{
+    border-radius: 30%;
+    width: 180px;
+    height: 120px;
+    margin-top: 20px;
+}
+
+.cus-input:focus{
+    border: 1px solid rgb(213, 24, 24);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.login-btn{
+    display:block;
+    margin: 0 auto;
+    background-color: white;
+    color: rgb(111, 73, 89);
+    border: .5px solid rgb(135, 79, 113);
+    font-weight: 500;
+    border-radius: 30px;
+}
+
+.login-btn:hover{
+    color: rgb(227, 158, 181);
+    background-color: rgb(147, 192, 234);
+    border:1px solid white;
+    transform: scale(1.15);
+}
+
+h1{
+   margin-top: 10px; 
+}
