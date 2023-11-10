@@ -78,6 +78,8 @@ def signup():
         lastName=form.lastName.data
         email = form.email.data
         password= form.password.data
+
+        # create an instance of User Class
         user = User(firstName, lastName, email, password)
 
         db.session.add(user)
@@ -90,6 +92,7 @@ def signup():
         return render_template('signup.html', form=form)
     
 @app.route('/logout')
+
 def logout():
     flash('Successfully logged out!', 'warning')
     logout_user()
