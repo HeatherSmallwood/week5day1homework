@@ -1,5 +1,6 @@
 *{
-    font-family: 'Edu TAS Beginner', cursive;
+ font-family: 'Roboto', sans-serif;
+    
 font-family: 'Inria Sans', sans-serif;
 }
 
@@ -47,3 +48,68 @@ img{
 h1{
    margin-top: 10px; 
 }
+
+.welcome{
+    color: pink;
+   
+  margin-left: 25%;
+  text-shadow: 2px 2px 4px #412d3c;
+  font-weight: 700%;
+  animation: slideIn 3.5s ease-out;
+
+    
+}
+
+@keyframes moveText {
+    0% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(100px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
+  .welcome{
+    animation: moveText 5s ease-in-out infinite;
+  }
+
+  .navbar-btn {
+    background-color:  #c1e7fb;
+    border: none;    
+}
+
+.btn{
+    color: white;
+    background-color: pink;
+    border: none;
+    
+    
+}
+.btn:hover{
+    color: rgb(227, 158, 181);
+    background-color: rgb(147, 192, 234);
+    border:1px solid white;
+    transform: scale(1.15);}
+    
+.narbar{
+    background-color:  #bfe9ff,
+   
+}
+
+
+.h1poke{
+    font-family: 'Roboto', sans-serif;
+
+    font-size: 30px;
+    text-decoration: none;
+    color: black;
+    font-weight:initial;
+}
+
+.nav-item{
+    margin-left: 20%;
+}
+

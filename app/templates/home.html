@@ -1,4 +1,7 @@
 {% extends 'base.html'%}
+{% block styles %}
+<link rel="stylesheet" href="../static/styles/login.css">
+{% endblock %}
 
 {% block title %}
     Pokemon Trainer Homepage
@@ -6,5 +9,5 @@
 
 {% block content %}
 {% include './includes/nav.html' %}
-    <h1> Welcome to the Pokemon Card Selector </h1>
+    <h1 class="welcome"> Welcome to the Pokemon Card Selector </h1>
 {% endblock %}
