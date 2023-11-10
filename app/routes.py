@@ -1,14 +1,18 @@
-from flask import request, render_template
+from flask import request, render_template, redirect, url_for, flash
 import requests
 from app import app
 from app.forms import pokemonFormForm
 from app.forms import LoginForm
 from app.forms import SignupForm
+from app.models import User, db
+from werkzeug.security import check_password_hash
+from flask_login import login_user, logout_user, current_user
 
 
 # Home
 @app.route('/')
-def homePage():
+@app.route('/home')
+def home():
     return render_template('home.html')
 
 # pokemon form
@@ -53,8 +57,11 @@ def login():
         email = form.email.data
         password = form.password.data
 
-        if email in REGISTERED_USERS and REGISTERED_USERS[email]['password'] == password:
-            return f'Hello, {REGISTERED_USERS[email]['name']}'
+        queried_user = User.qurt.filter(User.email ==email).first()
+        if queried_user and check_password_hash(queried_user.password, password):
+            login_user(queried_user)
+            flash(f'Hello, {queried_user.firstName}!', 'success')
+            return redirect(url_for('home'))
         else:
             return 'Invalid email or password'
     else:
@@ -67,15 +74,25 @@ def login():
 def signup():
     form = SignupForm()
     if request.method == 'POST' and form.validate_on_submit():
-        full_name = f'{form.firstName.data} {form.lastName.data}'
+        firstName =form.firstName.data
+        lastName=form.lastName.data
         email = form.email.data
         password= form.password.data
-        REGISTERED_USERS[email] ={
-            'name':full_name,
-            'password':password
-        }
-        return f'Thank you for singing up {full_name}!'
+        user = User(firstName, lastName, email, password)
+
+        db.session.add(user)
+        db.session.commit()
+
+
+        flash(f'Thank you for signing up {firstName}!', 'success')
+        return redirect(url_for('login'))
     else:
         return render_template('signup.html', form=form)
+    
+@app.route('/logout')
+def logout():
+    flash('Successfully logged out!', 'warning')
+    logout_user()
+    return redirect(url_for('login'))
 
 
