@@ -57,7 +57,7 @@ def login():
         email = form.email.data
         password = form.password.data
 
-        queried_user = User.qurt.filter(User.email ==email).first()
+        queried_user = User.query.filter(User.email ==email).first()
         if queried_user and check_password_hash(queried_user.password, password):
             login_user(queried_user)
             flash(f'Hello, {queried_user.firstName}!', 'success')
