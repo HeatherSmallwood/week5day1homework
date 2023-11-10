@@ -6,7 +6,7 @@ from app.forms import LoginForm
 from app.forms import SignupForm
 from app.models import User, db
 from werkzeug.security import check_password_hash
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, login_required
 
 
 # Home
@@ -92,7 +92,7 @@ def signup():
         return render_template('signup.html', form=form)
     
 @app.route('/logout')
-
+@login_required
 def logout():
     flash('Successfully logged out!', 'warning')
     logout_user()
