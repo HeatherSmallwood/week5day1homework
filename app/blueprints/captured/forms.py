@@ -4,8 +4,8 @@ from wtforms.validators import DataRequired
 
 
 
-class PostForm(FlaskForm):
-    title= StringField('Title: ')
+class Captured(FlaskForm):
+    name= StringField('Pokemon Name: ')
     capition = StringField('Caption: ')
     img_url = StringField('Image URL: ', validators=[DataRequired()])
-    submitButton = SubmitField('Create Post')
+    submitButton = SubmitField('Choose Pokemon')

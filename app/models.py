@@ -21,17 +21,17 @@ class User(db.Model, UserMixin):
         self.password = generate_password_hash(password)
         
 
-class Post(db.Model):
+class Captured(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title =db.Column(db.String)
+    name =db.Column(db.String)
     caption =db.Column(db.String)
     img_url = db.Column(db.String, nullable =False)
     created_on = db.Column(db.DateTime, default=datetime.utcnow())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 
-    def __init__(self, title, caption, img_url, user_id):
-        self.title = title
+    def __init__(self, name, caption, img_url, user_id):
+        self.name = name
         self.caption = caption
         self.img_url = img_url
         self.user_id = user_id

@@ -1,0 +1,31 @@
+{% extends 'base.html'%}
+
+{% block styles %}
+<link rel="stylesheet" href="../static/styles/login.css">
+{% endblock %}
+
+{% block content %}
+<img class="mx-auto d-block" src="https://i.pinimg.com/originals/aa/9e/d5/aa9ed5e1a2adb5111869da3dd478447e.png" alt="pink pokemon logo">
+<h1 class="text-center"> Highlight a new team member </h1>
+<form method="POST" class=" mx-auto w-25 d-block shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+      <label for="name" class="form-label">Pokename Name</label>
+      {{ form.name(class="form-control cus-input", id="name")}}
+    </div>
+    <div class="mb-3">
+        <label for="caption" class="form-label"> Caption</label>
+        {{ form.caption(class="form-control cus-input", id="caption")}}
+      </div>
+    <div class="mb-3">
+        <label for="img-url" class="form-label">Image URL</label>
+        {{ form.img_url(class="form-control cus-input", id="img-url")}}
+
+    </div>
+    
+      
+    {{ form.submitButton (class="login-btn btn-primary")}}
+  </form>
+
+
+{% endblock %}

@@ -1,20 +1,20 @@
-from app.blueprints.main import main
+from app.blueprints.pokemon import pokemon
 from flask import request, render_template
 from flask_login import login_required
 import requests
 
 
 
-@main.route('/')
-@main.route('/home')
+@pokemon.route('/')
+@pokemon.route('/home')
 def home():
     return render_template('home.html')
 
 # pokemon form
-@main.route('/pokemonForm', methods=['GET','POST'])
+@pokemon.route('/pokemonForm', methods=['GET','POST'])
 @login_required
 def pokemon_form():
-    form = pokemonFormForm()
+    form = pokemon_form()
     if request.method =='POST':
         pokemon_data = form.name.data
         try:
@@ -39,9 +39,9 @@ def pokemon_form():
     else:
         return render_template('pokemonForm.html', form=form)
     
-REGISTERED_USERS={
-    'heather@pokemon.com':{
-        'name': 'Heather Smallwood',
-        'password':'ocean7'
-    }
-}
+# # REGISTERED_USERS={
+# #     'heather@pokemon.com':{
+# #         'name': 'Heather Smallwood',
+# #         'password':'ocean7'
+# #     }
+# }
