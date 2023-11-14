@@ -14,7 +14,7 @@ def home():
 @pokemon.route('/pokemonForm', methods=['GET','POST'])
 @login_required
 def pokemon_form():
-    form = pokemon_form()
+    form = pokemonForm()
     if request.method =='POST':
         pokemon_data = form.name.data
         try:

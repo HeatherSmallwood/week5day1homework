@@ -25,3 +25,9 @@ def Capture_pokemon():
         return redirect(url_for('captured.team'))
     else:
         return render_template('create_team.html', form=form)
+    
+@captured.route('/team')
+@login_required
+def team():
+    all_members = captured.query.all()
+    return render_template('team.html', all_members=all_members)
