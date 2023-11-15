@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "driver": "PostgreSQL",
+            "connectString": "postgres://xdwsiezh:Bz1Ygb9IxGjiYt1S00apezPrFAyPDAjq@suleiman.db.elephantsql.com/xdwsiezh",
+            "name": "FlaskWeek6"
+        }
+    ]
+}

@@ -1,23 +1,27 @@
 from app.blueprints.pokemon import pokemon
 from flask import request, render_template,flash, redirect, url_for
-from flask_login import login_required, current_user, db
+from flask_login import login_required, current_user
 import requests
+from app.blueprints.pokemon.forms import PokemonForm
+from app.models import db,Pokemon
 
 
-
-@pokemonForm.route('/')
-@pokemonForm.route('/home')
+@pokemon.route('/')
+@pokemon.route('/home')
 def home():
     return render_template('home.html')
 
 # pokemon form
-@pokemonForm.route('/pokemonForm', methods=['GET','POST'])
+@pokemon.route('/pokemonForm', methods=['GET','POST'])
 @login_required
 def pokemon_form():
-    form = pokemonForm()
+    form = PokemonForm()
     if request.method =='POST':
         pokemon_data = form.name.data
-        try:
+        pokemon = Pokemon.query.get(name)
+        if poke:
+             return render_template('pokemonForm.html', poke)
+        else:
             print(pokemon_data)
             pokemon_url= f"https://pokeapi.co/api/v2/pokemon/{pokemon_data}"
             response = requests.get(pokemon_url)
@@ -25,43 +29,23 @@ def pokemon_form():
             pokemon_dict = {
                 'name' : extra_data['forms'][0]['name'],
                 'ability_name' : extra_data['abilities'][0]['ability']['name'],
-                'ability_name' : extra_data['abilities'][1]['ability']['name'],
                 'base_experience' : extra_data['base_experience'],
                 'attack_base_stat' : extra_data['stats'][1]['base_stat'],
                 'defense_base_stat' : extra_data['stats'][2]['base_stat'],
                 'hp_base_stat' : extra_data['stats'][0]['base_stat'],
                 'sprites_image': extra_data['sprites']['front_shiny']
             }
-           
-            return render_template('pokemonForm.html', pokemon_info=pokemon_dict, form=form)
-        except:
-            return render_template('pokemonForm.html',form=form)
-    else:
-        return render_template('pokemonForm.html', form=form)
+            poke=Pokemon(name=pokemon_dict['name'],ability_name=pokemon_dict['ability_name'],
+                         base_experience=pokemon_dict['base_experience'], attack_base_stat=pokemon_dict['attack_base_stat'],
+                         defense_base_stat=pokemon_dict['defense_base_stat'],hp_base_stat=pokemon_dict['hp_base_stat'],
+                         sprites_image=pokemon_dict['sprites_image'])
+            db.session.add(poke)
+            db.session.commit()
+            flash(f'Great choice {user_id} you have added { name }to your team!', 'success')
+            return render_template('pokemonForm.html', poke)
+        
 
 
-@pokemon.route('/capture_pokemon', methods=['GET', 'POST'])
-@login_required
-def Pokemon():
-    form = PokemonForm()
-    if request.method == 'POST' and form.validate_on_submit():
-        name =form.name.data
-        img_url = form.img_url.data
-        user_id = current_user.id
-      
-
-        # create an instance of capture pokemon Class
-        pokemon = Pokemon(name, img_url, user_id)
-
-        db.session.add(pokemon)
-        db.session.commit()
-
-
-        flash(f'Great choice {user_id} you have added { name }to your team!', 'success')
-        return redirect(url_for('pokemon.team'))
-    else:
-        return render_template('create_team.html', form=form)
-    
 @pokemon.route('/team')
 @login_required
 def team():
@@ -70,10 +54,23 @@ def team():
 
 
 
-# @captured.route('/catch/<int:pokemon_id>', methods=['POST'])
-# def catch_pokemon(pokemon_id):
-#     pass
+@pokemon.route('/catch/<int:name>', methods=['POST'])
+@login_required
+def catch_pokemon(name):
+    poke = Pokemon.query.get(name)
+    if poke and len(current_user.team) >= 6:
+        current_user.team.append(poke)
+        db.session.commit()
+        flash(f'Great choice {user_id} you have added { name }to your team!', 'success')
+    return redirect(url_for(pokemon.team))
 
-# @captured.route('/release/<int:user_pokemon_id>', methods=['POST'])
-# def release_pokemon(user_pokemon_id):
-#     pass
+# add restriction for no duplicates
+
+@pokemon.route('/release/<int:user_pokemon_id>', methods=['POST'])
+def release_pokemon(name):
+    poke = Pokemon.query.get(name)
+    if poke and poke in current_user.release:
+        current_user.team.remove(poke)
+        db.session.commit()
+        flash(f'{user_id}, you have released{ name }from your team!', 'info')
+    return redirect(url_for(pokemon.team))
