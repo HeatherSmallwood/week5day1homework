@@ -5,6 +5,7 @@ from app.models import db, User
 from flask_migrate import Migrate 
 
 
+
 app = Flask(__name__)
 app.config.from_object(Config)
 

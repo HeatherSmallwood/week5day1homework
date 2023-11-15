@@ -1,17 +1,17 @@
 from app.blueprints.pokemon import pokemon
-from flask import request, render_template
-from flask_login import login_required
+from flask import request, render_template,flash, redirect, url_for
+from flask_login import login_required, current_user, db
 import requests
 
 
 
-@pokemon.route('/')
-@pokemon.route('/home')
+@pokemonForm.route('/')
+@pokemonForm.route('/home')
 def home():
     return render_template('home.html')
 
 # pokemon form
-@pokemon.route('/pokemonForm', methods=['GET','POST'])
+@pokemonForm.route('/pokemonForm', methods=['GET','POST'])
 @login_required
 def pokemon_form():
     form = pokemonForm()
@@ -38,10 +38,42 @@ def pokemon_form():
             return render_template('pokemonForm.html',form=form)
     else:
         return render_template('pokemonForm.html', form=form)
+
+
+@pokemon.route('/capture_pokemon', methods=['GET', 'POST'])
+@login_required
+def Pokemon():
+    form = PokemonForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        name =form.name.data
+        img_url = form.img_url.data
+        user_id = current_user.id
+      
+
+        # create an instance of capture pokemon Class
+        pokemon = Pokemon(name, img_url, user_id)
+
+        db.session.add(pokemon)
+        db.session.commit()
+
+
+        flash(f'Great choice {user_id} you have added { name }to your team!', 'success')
+        return redirect(url_for('pokemon.team'))
+    else:
+        return render_template('create_team.html', form=form)
     
-# # REGISTERED_USERS={
-# #     'heather@pokemon.com':{
-# #         'name': 'Heather Smallwood',
-# #         'password':'ocean7'
-# #     }
-# }
+@pokemon.route('/team')
+@login_required
+def team():
+    all_members = pokemon.query.all()
+    return render_template('team.html', all_members=all_members)
+
+
+
+# @captured.route('/catch/<int:pokemon_id>', methods=['POST'])
+# def catch_pokemon(pokemon_id):
+#     pass
+
+# @captured.route('/release/<int:user_pokemon_id>', methods=['POST'])
+# def release_pokemon(user_pokemon_id):
+#     pass

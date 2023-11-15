@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Team Members
+{% endblock  %}
+
+{% block content %}
+{% include'./includes/nav.html'%}
+  {% if all_members%}
+        {% for member in all_members%}
+        <div class="card mx-auto mb-3" style="width: 18rem;">
+            <img src=" {{ pokemon.img_url }}" class="card-img-top" alt="{{ pokemon.name }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ pokemon.name }}</h5>
+              
+              {{% if current_user.id == pokemon.user_id%}}
+              <a href="#" class="btn btn-primary">Catch a team member</a>
+              <a href="#" class="btn btn-primary">Release team member </a>
+              {{% endif %}}
+            </div>
+          </div>
+        {% endfor %}
+
+  {% endif %}
+
+
+{% endblock  %}
+
