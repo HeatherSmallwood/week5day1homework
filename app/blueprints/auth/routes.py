@@ -17,7 +17,7 @@ def login():
         if queried_user and check_password_hash(queried_user.password, password):
             login_user(queried_user)
             flash(f'Hello, {queried_user.firstName}!', 'success')
-            return redirect(url_for('main.home'))
+            return redirect(url_for('pokemon.home'))
         else:
             return 'Invalid email or password'
     else:
@@ -34,6 +34,7 @@ def signup():
         lastName=form.lastName.data
         email = form.email.data
         password= form.password.data
+        print(firstName, lastName, email, password)
 
         # create an instance of User Class
         user = User(firstName, lastName, email, password)

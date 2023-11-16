@@ -3,7 +3,7 @@ from flask import request, render_template,flash, redirect, url_for
 from flask_login import login_required, current_user
 import requests
 from app.blueprints.pokemon.forms import PokemonForm
-from app.models import db,Pokemon
+from app.models import db,  Pokemon
 
 
 @pokemon.route('/')
@@ -17,10 +17,10 @@ def home():
 def pokemon_form():
     form = PokemonForm()
     if request.method =='POST':
-        pokemon_data = form.name.data
-        pokemon = Pokemon.query.get(name)
-        if poke:
-             return render_template('pokemonForm.html', poke)
+        pokemon_data = form.name.data.lower()
+        pokemon = Pokemon.query.get(pokemon_data)
+        if pokemon:
+             return render_template('pokemonForm.html',pokemon_info=pokemon, form=form)
         else:
             print(pokemon_data)
             pokemon_url= f"https://pokeapi.co/api/v2/pokemon/{pokemon_data}"
@@ -41,8 +41,8 @@ def pokemon_form():
                          sprites_image=pokemon_dict['sprites_image'])
             db.session.add(poke)
             db.session.commit()
-            flash(f'Great choice {user_id} you have added { name }to your team!', 'success')
-            return render_template('pokemonForm.html', poke)
+            flash(f'Great choice {current_user.id} you have added { poke.name }to your team!', 'success')
+    return render_template('pokemonForm.html', form=form)
         
 
 
@@ -58,11 +58,20 @@ def team():
 @login_required
 def catch_pokemon(name):
     poke = Pokemon.query.get(name)
-    if poke and len(current_user.team) >= 6:
-        current_user.team.append(poke)
-        db.session.commit()
-        flash(f'Great choice {user_id} you have added { name }to your team!', 'success')
-    return redirect(url_for(pokemon.team))
+
+    for poke in pokemon:
+        if len(current_user.team) >= 6:
+            return f'Your team is full'
+        elif user.id.pokemon_id == pokemon_id:
+             return f'{name} is already on your team!'
+
+        else:
+            current_user.team.append(poke)
+            db.session.commit()
+            flash(f'Great choice {user.id} you have added { name }to your team!', 'success')
+            return redirect(url_for(pokemon.team))
+        
+
 
 # add restriction for no duplicates
 
@@ -72,5 +81,5 @@ def release_pokemon(name):
     if poke and poke in current_user.release:
         current_user.team.remove(poke)
         db.session.commit()
-        flash(f'{user_id}, you have released{ name }from your team!', 'info')
+        flash(f'{user.id}, you have released{ name }from your team!', 'info')
     return redirect(url_for(pokemon.team))

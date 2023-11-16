@@ -8,14 +8,14 @@ db = SQLAlchemy()
 
 team = db.Table(
     'team',
-    db.Column('trainer_id', db.Integer, db.ForeignKey('user.user_id')),
+    db.Column('trainer_id', db.Integer, db.ForeignKey("user.id")),
     db.Column('pokemon_id', db.String, db.ForeignKey('pokemon.name')),
 
 
 )
 
 class User(db.Model, UserMixin):
-    user_id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     firstName = db.Column(db.String, nullable=False)
     lastName = db.Column(db.String, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
@@ -23,10 +23,10 @@ class User(db.Model, UserMixin):
     created_on = db.Column(db.DateTime, default=datetime.utcnow())
     following = db.relationship('User', 
                                 secondary = team,
-                                backref = db.backref(team, lazy='dynamic'),
+                                backref = db.backref('team', lazy='dynamic'),
                                 lazy='dynamic')
 
-    def __init__(self,firstName, lastName,email,password):
+    def __init__(self, firstName, lastName, email, password):
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
