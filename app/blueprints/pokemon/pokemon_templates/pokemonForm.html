@@ -24,7 +24,7 @@ Pokemon Search
 
 {%if pokemon_info %}
 
-<h1 class="text-center" > {{ pokemon_info['name'] }} will Battle for You! </h1>
+<h1 class="text-center" > {{ pokemon_info.name }} will Battle for You! </h1>
 <h4 class="text-center"> Remember to use {{ pokemon_info['ability_name'] }} to demolish any opponent! </h4>
 
 
@@ -46,7 +46,7 @@ Pokemon Search
   <tbody>
 
     <tr>
-      <th scope="row">{{ pokemon_info['name']}}</th>
+      <th scope="row">{{ pokemon_info.name}}</th>
       <td>{{ pokemon_info['ability_name'] }}</td>
       <td>{{ pokemon_info['ability_name'] }}</td>
       <td>{{pokemon_info['base_experience'] }}</td>

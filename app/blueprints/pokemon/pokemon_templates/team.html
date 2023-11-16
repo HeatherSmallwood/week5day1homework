@@ -16,11 +16,11 @@
               
               {% if current_user.id == pokemon.user_id%}
                 {% if user in current_user.catch%}
-                <a href="{{url_for(pokemon.release,user.id=pokemon.id)}}" class="btn btn-primary">Release </a>
+                <a href="{{url_for('pokemon.release',user.id==pokemon.id)}}" class="btn btn-primary">Release </a>
               
                 {%else%}
-                <a href="{{url_for(pokemon.catch,user.id=pokemon.id)}}" class="btn btn-primary">Catch</a>
-                {% enfif %}
+                <a href="{{url_for('pokemon.catch',user.id==pokemon.id)}}" class="btn btn-primary">Catch</a>
+                {% endif %}
                 {% endif %}
             </div>
           </div>

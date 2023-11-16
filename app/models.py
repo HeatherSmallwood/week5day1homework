@@ -8,8 +8,8 @@ db = SQLAlchemy()
 
 team = db.Table(
     'team',
-    db.Column('trainer_id', db.Integer, db.ForeignKey("user.id")),
-    db.Column('pokemon_id', db.String, db.ForeignKey('pokemon.name')),
+    db.Column('trainer_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('pokemon_id', db.Integer, db.ForeignKey('pokemon.id')),
 
 
 )
@@ -34,7 +34,8 @@ class User(db.Model, UserMixin):
         
 
 class Pokemon(db.Model):
-    name = db.Column(db.String, primary_key=True)
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String)
     ability_name = db.Column(db.String)
     base_experience = db.Column(db.String)
     attack_base_stat = db.Column(db.Integer)
@@ -42,12 +43,12 @@ class Pokemon(db.Model):
     hp_base_stat = db.Column(db.Integer)
     sprites_image = db.Column(db.String)
     created_on = db.Column(db.DateTime, default=datetime.utcnow())
-    pokemon_id = db.Column(db.Integer, nullable=False)
+  
 
 
 
 
-    def __init__(self, name, ability_name, base_experience, attack_base_stat, defense_base_stat, hp_base_stat, sprites_image, created_on, pokemon_id):
+    def __init__(self, name, ability_name, base_experience, attack_base_stat, defense_base_stat, hp_base_stat, sprites_image):
         self.name = name
         self.ability_name =  ability_name
         self.base_experience = base_experience
@@ -55,7 +56,6 @@ class Pokemon(db.Model):
         self.defense_base_stat = defense_base_stat
         self.hp_base_stat = hp_base_stat
         self.sprites_image = sprites_image
-        self.created_on =  created_on
-        self.pokemon_id = pokemon_id
+       
       
 
