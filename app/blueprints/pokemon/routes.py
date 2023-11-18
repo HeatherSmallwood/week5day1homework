@@ -3,7 +3,7 @@ from flask import request, render_template,flash, redirect, url_for
 from flask_login import login_required, current_user
 import requests
 from app.blueprints.pokemon.forms import PokemonForm
-from app.models import db,Pokemon
+from app.models import db,Pokemon, User
 
 @pokemon.route('/')
 @pokemon.route('/home')
@@ -61,7 +61,7 @@ def catch_pokemon(pokemon_id):
     poke = Pokemon.query.get(pokemon_id)
     
     if not poke:
-        return f"Pokémon with ID {pokemon_id} does not exist."
+        return f"Pokémon {pokemon_id} does not exist."
 
     user_pokemons = current_user.caught_pokemon.all()  # Retrieve the current user's caught pokemons
 
