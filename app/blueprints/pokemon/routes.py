@@ -63,22 +63,19 @@ def catch_pokemon(pokemon_id):
     if not poke:
         return f"Pokémon with ID {pokemon_id} does not exist."
 
-    if len(team) >= 5:
-        return 'Your team is full!'
-    
-   
-    if poke in current_user.team:
-        return f'{poke.name} is already on your team!'
-    
+    user_pokemons = current_user.caught_pokemon.all()  # Retrieve the current user's caught pokemons
 
-    if len(set(current_user.team)) >= 5:
+    if len(user_pokemons) >= 5:
         return 'Your team is full!'
     
-    current_user.team.append(poke)
+    if poke in user_pokemons:
+        flash(f'{poke.name} is already on your team!', 'success')
+        return redirect(url_for('pokemon.pokemon_form'))
+
+    current_user.caught_pokemon.append(poke)
     db.session.commit()
-    flash(f'Great choice {current_user.username}! You have added {poke.name} to your team!', 'success')
+    flash(f'Great choice {current_user.email}! You have added {poke.name} to your team!', 'success')
     return redirect(url_for('pokemon.team'))
-        
 
 @pokemon.route('/release/<int:pokemon_id>', methods=['POST'])
 @login_required
@@ -88,12 +85,13 @@ def release_pokemon(pokemon_id):
     if not poke:
         return f"Pokémon with ID {pokemon_id} does not exist."
     
-    if poke in current_user.team:
-        current_user.team.remove(poke)
-        db.session.commit()
-        flash(f'{current_user.username}, you have released {poke.name} from your team!', 'info')
-    return redirect(url_for('pokemon.team'))
+    user_pokemons = current_user.caught_pokemon.all()  # Retrieve the current user's caught pokemons
 
+    if poke in user_pokemons:
+        current_user.caught_pokemon.remove(poke)
+        db.session.commit()
+        flash(f'{current_user.email}, you have released {poke.name} from your team!', 'info')
+    return redirect(url_for('pokemon.team'))
 
 
 # @pokemon.route('/attack/<int:user_id>', methods=['GET'])
