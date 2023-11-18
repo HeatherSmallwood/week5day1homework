@@ -13,8 +13,8 @@
                 <div class="card-body">
                     <img src="{{ pokemon.sprites_image }}" class="card-img-top" alt="{{ pokemon.name }}">
                     <h5 class="card-title">{{ pokemon.name }}</h5>
-{% if current_user.id == pokemon.user_id %}
-                        {% if pokemon in current_user.team %}
+                    {% if current_user.id == pokemon.user_id %}
+                        {% if pokemon in current_user.caught_pokemon %}
                             <form action="{{ url_for('pokemon.release_pokemon', pokemon_id=pokemon.id) }}" method="POST">
                                 <button type="submit" class="btn btn-danger">Release</button>
                             </form>

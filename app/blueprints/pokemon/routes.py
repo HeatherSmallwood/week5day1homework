@@ -66,7 +66,8 @@ def catch_pokemon(pokemon_id):
     user_pokemons = current_user.caught_pokemon.all()  # Retrieve the current user's caught pokemons
 
     if len(user_pokemons) >= 5:
-        return 'Your team is full!'
+        flash(f'You can not add {poke.name}, team is full!', 'warning')
+        return redirect(url_for('pokemon.pokemon_form'))
     
     if poke in user_pokemons:
         flash(f'{poke.name} is already on your team!', 'success')
