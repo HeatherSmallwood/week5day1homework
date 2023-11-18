@@ -24,6 +24,16 @@ Pokemon Search
 
 {%if pokemon_info %}
 
+{% if pokemon_info in current_user.team %}
+<form action="{{ url_for('pokemon.release_pokemon', pokemon_id=pokemon_info.id) }}" method="POST">
+    <button type="submit" class="btn btn-danger">Release</button>
+</form>
+{% else %}
+<form action="{{ url_for('pokemon.catch_pokemon', pokemon_id=pokemon_info.id) }}" method="POST">
+    <button type="submit" class="btn btn-primary">Catch</button>
+</form>
+{% endif %}
+
 <h1 class="text-center" > {{ pokemon_info.name }} will Battle for You! </h1>
 <h4 class="text-center"> Remember to use {{ pokemon_info['ability_name'] }} to demolish any opponent! </h4>
 

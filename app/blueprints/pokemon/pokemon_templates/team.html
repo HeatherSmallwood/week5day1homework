@@ -5,29 +5,28 @@
 {% endblock  %}
 
 {% block content %}
-{% include'./includes/nav.html'%}
-  {% if all_members%}
-        {% for member in all_members%}
-        <div class="card mx-auto mb-3" style="width: 18rem;">
-          <div class="card-body"></div>
-            <img src=" {{ pokemon.sprites_image }}" class="card-img-top" alt="{{ pokemon.name }}">
-            
-              <h5 class="card-title">{{ pokemon.name }}</h5>
-              
-              {% if current_user.id == pokemon.user_id%}
-                {% if user in current_user.catch%}
-                <a href="{{url_for('pokemon.release',user.id==pokemon.id)}}" class="btn btn-primary">Release </a>
-              
-                {%else%}
-                <a href="{{url_for('pokemon.catch',user.id==pokemon.id)}}" class="btn btn-primary">Catch</a>
-                {% endif %}
-                {% endif %}
+    {% include './includes/nav.html' %}
+    
+    {% if all_members %}
+        {% for pokemon in all_members %}
+            <div class="card mx-auto mb-3" style="width: 18rem;">
+                <div class="card-body">
+                    <img src="{{ pokemon.sprites_image }}" class="card-img-top" alt="{{ pokemon.name }}">
+                    <h5 class="card-title">{{ pokemon.name }}</h5>
+{% if current_user.id == pokemon.user_id %}
+                        {% if pokemon in current_user.team %}
+                            <form action="{{ url_for('pokemon.release_pokemon', pokemon_id=pokemon.id) }}" method="POST">
+                                <button type="submit" class="btn btn-danger">Release</button>
+                            </form>
+                        {% else %}
+                            <form action="{{ url_for('pokemon.catch_pokemon', pokemon_id=pokemon.id) }}" method="POST">
+                                <button type="submit" class="btn btn-primary">Catch</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                </div>
             </div>
-          </div>
         {% endfor %}
-
-  {% endif %}
-
-
-{% endblock  %}
+    {% endif %}
+{% endblock %}
 

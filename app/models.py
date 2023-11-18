@@ -11,7 +11,6 @@ team = db.Table(
     db.Column('trainer_id', db.Integer, db.ForeignKey('user.id')),
     db.Column('pokemon_id', db.Integer, db.ForeignKey('pokemon.id')),
 
-
 )
 
 class User(db.Model, UserMixin):
@@ -21,9 +20,9 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String, unique=True, nullable=False)
     password= db.Column(db.String, nullable=False)
     created_on = db.Column(db.DateTime, default=datetime.utcnow())
-    following = db.relationship('User', 
+    caught_pokemon = db.relationship('User', 
                                 secondary = team,
-                                backref = db.backref('team', lazy='dynamic'),
+                                backref = db.backref('team1', lazy='dynamic'),
                                 lazy='dynamic')
 
     def __init__(self, firstName, lastName, email, password):
@@ -47,7 +46,6 @@ class Pokemon(db.Model):
 
 
 
-
     def __init__(self, name, ability_name, base_experience, attack_base_stat, defense_base_stat, hp_base_stat, sprites_image):
         self.name = name
         self.ability_name =  ability_name
@@ -58,4 +56,5 @@ class Pokemon(db.Model):
         self.sprites_image = sprites_image
        
       
+
 
