@@ -20,9 +20,9 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String, unique=True, nullable=False)
     password= db.Column(db.String, nullable=False)
     created_on = db.Column(db.DateTime, default=datetime.utcnow())
-    caught_pokemon = db.relationship('User', 
+    caught_pokemon = db.relationship('Pokemon', 
                                 secondary = team,
-                                backref = db.backref('team1', lazy='dynamic'),
+                                backref = db.backref('trainer', lazy='dynamic'),
                                 lazy='dynamic')
 
     def __init__(self, firstName, lastName, email, password):

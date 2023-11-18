@@ -49,8 +49,11 @@ def pokemon_form():
 @pokemon.route('/team')
 @login_required
 def team():
-    all_members = current_user.team
-    return render_template('team.html', all_members = all_members)
+    user = User.query.get(current_user.id)
+    if user:
+        all_members = user.caught_pokemon.all()
+        return render_template('team.html', all_members=all_members)
+    return "User not found"
 
 @pokemon.route('/catch/<int:pokemon_id>', methods=['POST'])
 @login_required
@@ -59,18 +62,19 @@ def catch_pokemon(pokemon_id):
     
     if not poke:
         return f"Pokémon with ID {pokemon_id} does not exist."
-    # if len(team) >= 5:
-    #     return 'Your team is full!'
+
+    if len(team) >= 5:
+        return 'Your team is full!'
     
    
-    # if poke in current_user.team:
-    #     return f'{poke.name} is already on your team!'
+    if poke in current_user.team:
+        return f'{poke.name} is already on your team!'
     
 
-    # if len(set(current_user.team)) >= 5:
-    #     return 'Your team is full!'
+    if len(set(current_user.team)) >= 5:
+        return 'Your team is full!'
     
-    current_user.caught_pokemon.append(poke)
+    current_user.team.append(poke)
     db.session.commit()
     flash(f'Great choice {current_user.username}! You have added {poke.name} to your team!', 'success')
     return redirect(url_for('pokemon.team'))
