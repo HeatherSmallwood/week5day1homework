@@ -6,9 +6,9 @@ font-family: 'Inria Sans', sans-serif;
 
 body{
     height: 100vh;
-    background: #ff6e7f;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to bottom, #bfe9ff, #ff6e7f);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to bottom, #bfe9ff, #ff6e7f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #ff6e7f;  
+    background: -webkit-linear-gradient(to bottom, #bfe9ff, #ff6e7f); 
+    background: linear-gradient(to bottom, #bfe9ff, #ff6e7f); 
     padding: 20px;
 }
 
@@ -115,8 +115,8 @@ h1{
 
 
 .card{
-    background: #ff6e7f;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to bottom, #bfe9ff, #ff6e7f);  /* Chrome 10-25, Safari 5.1-6 */
+    background: #ff6e7f; 
+    background: -webkit-linear-gradient(to bottom, #bfe9ff, #ff6e7f);  
     background: linear-gradient(to bottom, #bfe9ff, #ff6e7f);
 
 }
@@ -218,11 +218,11 @@ img.pokemon-bottom {
     font-size: 24px;
     color: #333;
     margin-bottom: 40px;
-    margin-top: 60px; /* Adjust the top margin to lower the information */
+    margin-top: 60px; 
     cursor: pointer;
     animation: moveText 2s ease-in-out infinite alternate;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    text-decoration: underline; /* Underline the text */
+    text-decoration: underline;
 }
 
 @keyframes moveText {
@@ -230,7 +230,7 @@ img.pokemon-bottom {
         transform: translateY(0);
     }
     100% {
-        transform: translateY(10px); /* Move the text upwards */
+        transform: translateY(10px); 
     }
 }
 
