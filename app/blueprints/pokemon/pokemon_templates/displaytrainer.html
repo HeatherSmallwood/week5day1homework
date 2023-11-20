@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block styles %}
+<link rel="stylesheet" href="../static/styles/login.css">
+{% endblock %}
+
+{% block title %}
+    Trainer Details
+{% endblock  %}
+
+{% block content %}
+    {% include './includes/nav.html' %}
+    
+    <h2>{{ user.firstName }}'s Pokémon</h2>
+    {% for pokemon in all_members %}
+    <div class="card" style="width: 18rem;">
+        <img src="{{ pokemon.sprites_image }}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{ pokemon.name }}</h5>
+            <p>Name: {{ pokemon.name }}</p>
+            <p>Attack: {{ pokemon.attack_base_stat }}</p>
+            <p>Defense: {{ pokemon.defense_base_stat }}</p>
+        </div>
+    </div>
+    {% endfor %}
+
+    <a href="{{ url_for('pokemon.attack_user', user_id=user.id) }}" class="btn btn-danger">Battle</a>
+{% endblock %}
+

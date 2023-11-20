@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block styles %}
+<link rel="stylesheet" href="../static/styles/login.css">
+<style>
+ 
+    img.pokemon-middle {
+        position: fixed;
+        right: 5%; 
+        top: 50%; 
+        transform: translateY(-50%);
+        width: 60%; 
+        height: auto;
+        border-radius: 10px;
+        z-index: 999;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block title %}
+    Trainers
+{% endblock %}
+
+{% block content %}
+    {% include './includes/nav.html' %}
+    <h5> Trainers </h5>
+    
+    {% for user in users %}
+        <h4> {{ user.firstName }}</h4>
+        <a href="{{ url_for('pokemon.display_trainer', user_id=user.id) }}" class="btn btn-info">View Trainer</a>
+       
+    {% endfor %}
+
+    <img src="https://wallpapercave.com/wp/wp2768347.png" alt="" class="pokemon-middle">
+{% endblock %}

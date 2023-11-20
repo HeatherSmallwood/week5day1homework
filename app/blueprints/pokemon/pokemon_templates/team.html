@@ -1,32 +1,73 @@
+<!-- team.html -->
 {% extends 'base.html' %}
+{% block styles %}
+<link rel="stylesheet" href="../static/styles/login.css">
+<style>
+    .card {
+        width: 8rem;
+        margin: 0.25rem; 
+        position: relative; 
+        transition: transform 0.3s ease-in-out; 
+    }
+    
+    .card:hover {
+        transform: scale(1.1); 
+        z-index: 1; 
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); 
+    }
+    
+    .card::before {
+        content: ''; 
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0.2), transparent); 
+        z-index: -1; 
+        transition: transform 0.3s ease-in-out; 
+        transform: scaleX(0); 
+        transform-origin: left; 
+    }
+    
+    .card:hover::before {
+        transform: scaleX(1); 
+    }
+</style>
+{% endblock %}
 
 {% block title %}
-    Team Members
+    Trainer Details
 {% endblock  %}
 
 {% block content %}
     {% include './includes/nav.html' %}
     
-    {% if all_members %}
+    <h2>{{ user.firstName }}'s Pokémon</h2>
+    <div class="row row-cols-5"> <!-- Fit 5 cards in one row -->
         {% for pokemon in all_members %}
-            <div class="card mx-auto mb-3" style="width: 18rem;">
+        <div class="col-md-2"> <!-- Adjust column width for 5 cards -->
+            <div class="card">
+                <img src="{{ pokemon.sprites_image }}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <img src="{{ pokemon.sprites_image }}" class="card-img-top" alt="{{ pokemon.name }}">
                     <h5 class="card-title">{{ pokemon.name }}</h5>
-                    {% if current_user.id == pokemon.user_id %}
-                        {% if pokemon in current_user.caught_pokemon %}
-                            <form action="{{ url_for('pokemon.release_pokemon', pokemon_id=pokemon.id) }}" method="POST">
-                                <button type="submit" class="btn btn-danger">Release</button>
-                            </form>
-                        {% else %}
-                            <form action="{{ url_for('pokemon.catch_pokemon', pokemon_id=pokemon.id) }}" method="POST">
-                                <button type="submit" class="btn btn-primary">Catch</button>
-                            </form>
-                        {% endif %}
-                    {% endif %}
+                    <p>Name: {{ pokemon.name }}</p>
+                    <p>Attack: {{ pokemon.attack_base_stat }}</p>
+                    <p>Defense: {{ pokemon.defense_base_stat }}</p>
                 </div>
+                {% if user.id == current_user.id %} 
+                    <form action="{{ url_for('pokemon.release_pokemon', pokemon_id=pokemon.id) }}" method="POST">
+                        <button type="submit" class="btn btn-warning mt-2">Release</button>
+                    </form>
+                {% endif %}
             </div>
+        </div>
         {% endfor %}
+    </div>
+
+    {% if user.id != current_user.id %}
+        <form action="{{ url_for('pokemon.attack_user', user_id=user.id) }}" method="GET">
+            <button type="submit" class="btn btn-danger mt-3">Battle</button>
+        </form>
     {% endif %}
 {% endblock %}
-

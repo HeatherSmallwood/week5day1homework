@@ -21,6 +21,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('pokemon.team') }}">Team</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('pokemon.display_teams') }}">Trainers</a>
+                    </li>
+                   
+                
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>

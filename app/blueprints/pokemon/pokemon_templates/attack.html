@@ -1,21 +1,80 @@
-<!-- {% extends 'base.html' %}
+<!-- Attack Page -->
+
+{% extends 'base.html' %}
+{% block styles %}
+<link rel="stylesheet" href="../static/styles/login.css">
+<style>
+    /* Additional custom styles for smaller cards and fitting content without scrolling */
+    .card {
+        width: 9rem; /* Adjust the width as needed */
+        margin: 0.25rem; /* Adjust the margin between cards */
+    }
+
+    .row {
+        margin: 0 -0.25rem; /* Negative margin to offset the positive margins on columns */
+    }
+
+    .col-md-2 {
+        padding: 0; /* Remove padding */
+        margin-bottom: 0.5rem; /* Adjust the margin as needed */
+    }
+
+    .card-body {
+        padding: 0.5rem; /* Adjust the padding as needed */
+    }
+
+    .btn-primary {
+        margin-top: 0.5rem; /* Adjust the margin as needed */
+    }
+</style>
+{% endblock %}
 
 {% block title %}
     Attack Page
-{% endblock  %}
+{% endblock %}
 
 {% block content %}
     {% include './includes/nav.html' %}
     
-   
-    <h2>Attacker's Pokémon</h2>
-    {% for pokemon in user_pokemons %}
-     
-    {% endfor %}
+    <h2>{{ current_user.firstName }}'s Pokémon</h2>
+    <div class="row">
+        {% for pokemon in user_pokemons %}
+        <div class="col-md-2">
+            <div class="card">
+                <img src="{{ pokemon.sprites_image }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ pokemon.name }}</h5>
+                    <p>Name: {{ pokemon.name }}</p>
+                    <p>Attack: {{ pokemon.attack_base_stat }}</p>
+                    <p>Defense: {{ pokemon.defense_base_stat }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <h2>{{ defending_user.firstName }}'s Pokémon</h2>
+    <div class="row">
+        {% for pokemon in defending_pokemons %}
+        <div class="col-md-2">
+            <div class="card">
+                <img src="{{ pokemon.sprites_image }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ pokemon.name }}</h5>
+                    <p>Name: {{ pokemon.name }}</p>
+                    <p>Attack: {{ pokemon.attack_base_stat }}</p>
+                    <p>Defense: {{ pokemon.defense_base_stat }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 
- 
-    <h2>Defender's Pokémon</h2>
-    {% for pokemon in defending_pokemons %}
- 
-    {% endfor %}
-{% endblock %} -->
+    <!-- Implement Battle Mechanism -->
+    <form action="{{ url_for('pokemon.battle_results') }}" method="POST">
+        <!-- Include necessary form fields to submit the battle -->
+        <input type="hidden" name="defending_user_id" value="{{ defending_user.id }}">
+        <!-- Hidden field to store defending user's ID -->
+        <button type="submit" class="btn btn-primary">Start Battle</button>
+    </form>
+{% endblock %}

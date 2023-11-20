@@ -1,0 +1,55 @@
+<!-- Battle Results Page -->
+{% extends 'base.html' %}
+{% block styles %}
+<link rel="stylesheet" href="../static/styles/login.css">
+<style>
+  
+    .battle-container {
+        margin-top: 20px; 
+    }
+
+    .outcome-list {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    .outcome-item {
+        margin-bottom: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block title %}
+    Battle Results
+{% endblock %}
+
+{% block content %}
+    {% include './includes/nav.html' %}
+    
+    <div class="container battle-container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Battle Results</h2>
+                <div class="card">
+                    <div class="card-body">
+                        {% if outcomes %}
+                            <ul class="outcome-list">
+                                {% for outcome in outcomes %}
+                                    <li class="outcome-item">{{ outcome }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No outcomes to display.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+    <div class="text-center mt-3">
+        <a href="{{ url_for('pokemon.team') }}" class="btn btn-primary">Back to Team</a>
+    </div>
+{% endblock %}

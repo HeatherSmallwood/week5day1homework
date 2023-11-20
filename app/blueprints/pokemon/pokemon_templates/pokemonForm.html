@@ -1,7 +1,7 @@
 {% extends 'base.html'%}
 
 {% block styles %}
-
+<link rel="stylesheet" href="../static/styles/login.css">
 {% endblock %}
 
 {% block title %}
@@ -12,7 +12,7 @@ Pokemon Search
 
 {% include'./includes/nav.html'%}
 
-<form method="POST" class=" shadow-lg p-3 bg-body-tertiary rounded ">
+<form method="POST" class="shadow-lg p-3 bg-body-tertiary rounded form-container">
   {{ form.hidden_tag() }}
   <div class="mb-3">
 
@@ -30,7 +30,7 @@ Pokemon Search
 </form>
 {% else %}
 <form action="{{ url_for('pokemon.catch_pokemon', pokemon_id=pokemon_info.id) }}" method="POST">
-    <button type="submit" class="btn btn-primary">Catch</button>
+  <button type="submit" class="btn btn-primary">Catch</button>
 </form>
 {% endif %}
 
@@ -53,12 +53,13 @@ Pokemon Search
 
     </tr>
   </thead>
+
   <tbody>
 
     <tr>
       <th scope="row">{{ pokemon_info.name}}</th>
       <td>{{ pokemon_info['ability_name'] }}</td>
-      <td>{{ pokemon_info['ability_name'] }}</td>
+     
       <td>{{pokemon_info['base_experience'] }}</td>
       <td>{{ pokemon_info['attack_base_stat'] }}</td>
       <td>{{ pokemon_info['defense_base_stat'] }}</td>
@@ -68,5 +69,6 @@ Pokemon Search
 
   </tbody>
 </table>
+
 {% endif%}
 {% endblock %}

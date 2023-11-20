@@ -9,7 +9,7 @@ db = SQLAlchemy()
 team = db.Table(
     'team',
     db.Column('trainer_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('pokemon_id', db.Integer, db.ForeignKey('pokemon.id')),
+    db.Column('pokemon_id', db.Integer, db.ForeignKey('pokemon.id'))
 
 )
 
